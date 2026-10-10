@@ -1,10 +1,10 @@
 {
-  "name": "jiosaavn-api",
+  "name": "saavn-extension",
   "version": "0.1.0",
-  "description": "Unofficial JioSaavn API",
+  "description": "Saavn extension for Echo Music",
   "type": "module",
   "license": "MIT",
-  "repository": "https://github.com/EchoMusicApp/jiosaavn-api",
+  "repository": "https://github.com/EchoMusicApp/saavn-extension",
   "author": "Sumit Kolhe",
   "main": "dist/server.js",
   "module": "dist/index.js",

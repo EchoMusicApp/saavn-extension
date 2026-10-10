@@ -27,7 +27,7 @@ Home.get('/', (c) => {
         <link
           rel="icon"
           type="image/png"
-          href="https://raw.githubusercontent.com/EchoMusicApp/jiosaavn-api/main/assets/Echo-White.png"
+          href="https://raw.githubusercontent.com/EchoMusicApp/saavn-extension/main/assets/Echo-White.png"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
@@ -205,15 +205,13 @@ Home.get('/', (c) => {
         <div class="container">
           <div class="logo-container">
             <img
-              src="https://raw.githubusercontent.com/EchoMusicApp/jiosaavn-api/main/assets/Echo-White.png"
+              src="https://raw.githubusercontent.com/EchoMusicApp/saavn-extension/main/assets/Echo-White.png"
               alt="Echo Music Logo"
               style={{ width: '32px', height: '32px', objectFit: 'contain' }}
             />
           </div>
           <h1>Saavn Extension</h1>
-          <p class="subtitle">
-            Ready for Echo Music. Stream the best available JioSaavn audio, up to 320 kbps AAC. Not lossless.
-          </p>
+          <p class="subtitle">Ready for Echo Music. Stream the best available JioSaavn audio, up to 320 kbps AAC.</p>
 
           <div class="url-field">
             <div class="url-input" id="base-url">
@@ -252,7 +250,7 @@ Home.get('/', (c) => {
             <li class="step">
               <span class="step-number">2.</span>
               <span class="step-text">
-                <a href="https://github.com/EchoMusicApp/jiosaavn-api" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/EchoMusicApp/saavn-extension" target="_blank" rel="noopener noreferrer">
                   View source on <span class="highlight">GitHub</span>
                 </a>
               </span>
@@ -260,7 +258,11 @@ Home.get('/', (c) => {
             <li class="step">
               <span class="step-number">3.</span>
               <span class="step-text">
-                <a href="https://github.com/EchoMusicApp/jiosaavn-api/issues" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://github.com/EchoMusicApp/saavn-extension/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Report an <span class="highlight">Issue</span>
                 </a>
               </span>

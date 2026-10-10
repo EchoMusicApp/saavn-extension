@@ -44,7 +44,7 @@ const stream = async (ctx: Context) => {
   const payload = song ? createEchoStream(song.downloadUrl) : null
   if (!payload) throw new HTTPException(404, { message: 'No playable Saavn stream found' })
 
-  // Saavn provides lossy AAC only, so even LOSSLESS requests use the best available bitrate.
+  // Quality query parameters are ignored in favor of the best available AAC bitrate.
   return ctx.json(payload)
 }
 

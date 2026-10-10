@@ -2,11 +2,11 @@
 
 Self-host a JioSaavn extension on **Cloudflare Workers**, then paste your Worker URL into Echo Music. No API key, Android changes, or audio proxy is required.
 
-**Audio quality:** best available AAC/M4A, up to **320 kbps** when the track supports it. JioSaavn does **not** provide lossless/FLAC through this API. A client's `quality=LOSSLESS` request selects the best available lossy stream, not a converted or falsely labeled lossless file.
+**Audio quality:** best available AAC/M4A, up to **320 kbps** when the track supports it.
 
 ## Deploy with Cloudflare
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/EchoMusicApp/jiosaavn-api)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/EchoMusicApp/saavn-extension)
 
 1. Click **Deploy to Cloudflare Workers** and sign in to Cloudflare/GitHub.
 2. Follow Cloudflare's repository setup and deploy the Worker. No secrets or bindings are needed. If prompted for commands, use:
@@ -51,7 +51,7 @@ npx wrangler login
 npm run deploy
 ```
 
-`deploy:check` only bundles the Worker; `deploy` publishes it. The Worker is named `jiosaavn-api` in `wrangler.toml`; change the name before deploying if you already have a different Worker using that name. For an existing deployment, redeploy the updated code to keep the same URL.
+`deploy:check` only bundles the Worker; `deploy` publishes it. The Worker is named `saavn-extension` in `wrangler.toml`; change the name before deploying if you already have a different Worker using that name. To update an existing Worker under a different name and keep its URL, use `npm run deploy -- --name YOUR_EXISTING_WORKER_NAME`. Deploying under the new name creates a separate Worker; update the extension URL in Echo Music if you switch deployments.
 
 ## Development
 
@@ -74,11 +74,11 @@ The Cloudflare entry point is `src/worker.ts`; the Bun entry point remains `src/
 
 Routes are available at the root and under `/api`. Echo responses deliberately have **no** legacy `{success, data}` wrapper.
 
-| Endpoint                               | Response                                           |
-| -------------------------------------- | -------------------------------------------------- |
-| `GET /search?q=title%20artist`         | `{ "tracks": [...] }`                              |
-| `GET /stream/SONG_ID?quality=LOSSLESS` | Stream metadata with a direct HTTPS audio URL      |
-| `GET /stream?id=SONG_ID`               | Same response; supports Echo's older stream lookup |
+| Endpoint                       | Response                                           |
+| ------------------------------ | -------------------------------------------------- |
+| `GET /search?q=title%20artist` | `{ "tracks": [...] }`                              |
+| `GET /stream/SONG_ID`          | Stream metadata with a direct HTTPS audio URL      |
+| `GET /stream?id=SONG_ID`       | Same response; supports Echo's older stream lookup |
 
 Search tracks contain `id`, `title`, `artist`, `duration` (integer seconds or null), `artworkURL`, and `albumArtworkURL`. Titles and artist names have common HTML entities decoded; the largest available artwork is selected.
 
@@ -102,7 +102,7 @@ Check a deployment with:
 ```sh
 curl 'https://YOUR_WORKER.workers.dev/search?q=Arijit'
 # Use an id from tracks in the response:
-curl 'https://YOUR_WORKER.workers.dev/stream/SONG_ID?quality=LOSSLESS'
+curl 'https://YOUR_WORKER.workers.dev/stream/SONG_ID'
 ```
 
 The original API remains available at `/api/search?query=...`, `/api/search/songs?query=...`, `/api/songs?ids=...`, and the album/artist/playlist routes. `/api/search?q=...` serves Echo's contract, while `/api/search?query=...` retains legacy global search. Legacy API documentation: `/docs` and `/swagger`.

@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: jiosaavn-api
+    container_name: saavn-extension
     build:
       context: .
       dockerfile: Dockerfile

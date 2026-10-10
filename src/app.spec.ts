@@ -17,7 +17,7 @@ describe('Echo Worker integration', () => {
     expect(html).toContain('https://my-saavn.workers.dev')
     expect(html).toContain('const baseUrl = window.location.origin;')
     expect(html).toContain('Extension Sources')
-    expect(html).toContain('Not lossless')
+    expect(html).toContain('up to 320 kbps AAC')
   })
 
   it.each(['/search', '/api/search', '/stream', '/api/stream'])('mounts and validates Echo route %s', async (path) => {

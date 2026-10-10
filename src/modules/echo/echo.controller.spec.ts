@@ -165,16 +165,19 @@ describe('Echo search contract', () => {
 })
 
 describe('Echo stream contract', () => {
-  it.each(['/stream/Ab_12-Z?quality=LOSSLESS', '/stream?id=Ab_12-Z', '/stream?id=Ab_12-Z&quality=LOSSLESS'])(
-    'returns the best lossy AAC stream without a provider envelope: %s',
-    async (path) => {
-      const response = await Echo.request(path)
-      expect(response.status).toBe(200)
-      expect(await response.json()).toEqual(highStream)
-      expect(services.getSongByIds).toHaveBeenCalledExactlyOnceWith({ songIds: 'Ab_12-Z' })
-      expect(services.searchSongs).not.toHaveBeenCalled()
-    }
-  )
+  it.each([
+    '/stream/Ab_12-Z?quality=320kbps',
+    '/stream?id=Ab_12-Z',
+    '/stream?id=Ab_12-Z&quality=320kbps',
+    '/stream/Ab_12-Z?quality=96kbps',
+    '/stream?id=Ab_12-Z&quality=UNKNOWN'
+  ])('ignores quality queries and returns the best AAC stream without a provider envelope: %s', async (path) => {
+    const response = await Echo.request(path)
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual(highStream)
+    expect(services.getSongByIds).toHaveBeenCalledExactlyOnceWith({ songIds: 'Ab_12-Z' })
+    expect(services.searchSongs).not.toHaveBeenCalled()
+  })
 
   it('uses the path ID rather than allowing the query ID to override it', async () => {
     const response = await Echo.request('/stream/Ab_12-Z?id=other')
@@ -193,7 +196,7 @@ describe('Echo stream contract', () => {
       song({ downloadUrl: [{ quality: `${kbps}kbps`, url: `https://audio.example/${kbps}.m4a` }] })
     ])
 
-    const response = await Echo.request('/stream/Ab_12-Z?quality=LOSSLESS')
+    const response = await Echo.request('/stream/Ab_12-Z?quality=320kbps')
     expect(response.status).toBe(200)
     expect(await response.json()).toEqual({
       url: `https://audio.example/${kbps}.m4a`,
@@ -214,7 +217,7 @@ describe('Echo stream contract', () => {
           { quality: '320kbps', url: 'https://user:secret@audio.example/320.m4a' },
           { quality: '96kbps', url: 'https://audio.example/96.m4a' },
           { quality: '160 KBPS', url: 'http://audio.example/160.m4a' },
-          { quality: 'LOSSLESS', url: 'https://audio.example/unknown.m4a' },
+          { quality: 'UNKNOWN', url: 'https://audio.example/unknown.m4a' },
           { quality: '0kbps', url: 'https://audio.example/zero.m4a' }
         ]
       })
@@ -377,7 +380,7 @@ describe('Echo errors and parent mounting', () => {
       expect(search.status).toBe(200)
       expect(await search.json()).toHaveProperty('tracks')
 
-      for (const path of ['/stream/Ab_12-Z?quality=LOSSLESS', '/stream?id=Ab_12-Z']) {
+      for (const path of ['/stream/Ab_12-Z?quality=320kbps', '/stream?id=Ab_12-Z']) {
         const response = await parent.request(`${prefix}${path}`)
         expect(response.status).toBe(200)
         expect(await response.json()).toEqual(highStream)
