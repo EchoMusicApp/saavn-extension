@@ -1,5 +1,3 @@
-# Saavn Extension for Echo Music
-
 <p align="center">
   <img src="assets/banner.png" alt="Stream at 320 kbps" width="100%">
 </p>
