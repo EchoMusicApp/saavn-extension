@@ -1,0 +1,8 @@
+name = "jiosaavn-api"
+main = "./src/worker.ts"
+compatibility_date = "2025-03-21"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[observability]
+enabled = true
