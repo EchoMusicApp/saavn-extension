@@ -1,5 +1,9 @@
 # Saavn Extension for Echo Music
 
+<p align="center">
+  <img src="assets/banner.png" alt="Stream at 320 kbps" width="100%">
+</p>
+
 Connect JioSaavn to Echo Music using your own Cloudflare Worker and enjoy audio at up to **320 kbps**, where available. No API key is required.
 
 ## 1. Deploy to Cloudflare
