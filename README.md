@@ -18,6 +18,12 @@ Self-host a JioSaavn extension on **Cloudflare Workers**, then paste your Worker
 
 Paste the **base URL**, not `/docs`, `/search`, or a song's audio link. The root URL is recommended; a base ending in `/api` also works for compatibility. Search and playback use the enabled extension through Echo's existing extension system. Availability and matching depend on JioSaavn's catalog and the client's matching logic.
 
+### Dependency installation failures
+
+Cloudflare installs dependencies before running the build command. This repository uses `package-lock.json` for reproducible npm installs; do not commit a separate `bun.lockb` or `bun.lock` for Cloudflare deployments.
+
+If a previously created Cloudflare repository fails with `bun install --frozen-lockfile` and `lockfile had changes`, delete `bun.lockb` (and `bun.lock`, if present) from **the GitHub repository connected to that Worker**, keeping `package-lock.json`, then commit and retry deployment. Recreating the deployment from the updated source repository also works. Changing the build command alone will not fix a failure in the earlier automatic installation step.
+
 ### Publishing this folder as your own repository
 
 The button above targets the existing repository URL in this project's metadata. **It will use these changes only after they are published there.** To create a different repository:
